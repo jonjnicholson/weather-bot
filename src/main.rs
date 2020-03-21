@@ -4,10 +4,10 @@ use serenity::{
     model::{channel::Message, gateway::Ready},
     prelude::*,
 };
-use std::vec::Vec;
 use std::format;
+use std::vec::Vec;
 
-const TOKEN : &str = "";
+const TOKEN: &str = "";
 
 struct Handler;
 
@@ -54,12 +54,10 @@ fn main() {
 }
 
 fn get_weather(ctx: Context, msg: Message) -> Result<(), Box<dyn std::error::Error>> {
-
     let param = parse_input(&msg.content);
     let url = format!("http://wttr.in/{}?format=4", param);
 
-    let body = reqwest::blocking::get(&url)?
-    .text()?;
+    let body = reqwest::blocking::get(&url)?.text()?;
 
     if let Err(why) = msg.channel_id.say(&ctx.http, body) {
         println!("Error sending message: {:?}", why);
@@ -71,9 +69,9 @@ fn parse_input(user_input: &str) -> String {
     let pieces: Vec<&str> = user_input.split(' ').collect();
     if let Some((_, multi_params)) = pieces.split_first() {
         if !multi_params.is_empty() {
-            return multi_params.join(" ")
+            return multi_params.join(" ");
         } else {
-            return String::from("")
+            return String::from("");
         };
     };
     String::from("")
