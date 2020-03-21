@@ -6,8 +6,7 @@ use serenity::{
 };
 use std::format;
 use std::vec::Vec;
-
-const TOKEN: &str = "";
+use std::env;
 
 struct Handler;
 
@@ -39,10 +38,14 @@ impl EventHandler for Handler {
 }
 
 fn main() {
+    // Configure the client with your Discord bot token in the environment.
+    let token = env::var("DISCORD_TOKEN")
+        .expect("Expected a token in the environment");
+
     // Create a new instance of the Client, logging in as a bot. This will
     // automatically prepend your bot token with "Bot ", which is a requirement
     // by Discord for bot users.
-    let mut client = Client::new(&TOKEN, Handler).expect("Err creating client");
+    let mut client = Client::new(&token, Handler).expect("Err creating client");
 
     // Finally, start a single shard, and start listening to events.
     //
